@@ -1,0 +1,51 @@
+11-sep-
+
+1]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipkart
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: deploy
+  template:
+    metadata:
+      name: Flipkart-login
+      labels:
+        name: deploy
+    spec:
+      containers:
+      - name: login
+        image: ubuntu
+        command: ["/bin/bash", "-c", "while true; do echo 'container login'; sleep 3; done"]
+
+2]
+kind: Pod
+apiVersion: v1
+metadata:
+  name: amazon
+spec:
+  containers:
+    - name: login
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo 'login'; sleep 2; done"]
+    - name: signup
+      image: httpd
+      ports:
+      - containerPort: 80
+
+
+3] 
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod1
+spec:
+  containers:
+    - name: httpd
+      image: httpd
+      ports:
+      - containerPort: 80
+

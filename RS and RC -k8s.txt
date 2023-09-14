@@ -1,0 +1,58 @@
+1]label-selector
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jsp
+  labels:
+    department: developer
+    batch: jdda3
+spec:
+  containers:
+    - name: sample1
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo 'hiii hellooo'; sleep 5; done"]
+
+2] replication controller
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: signup-v1
+spec:
+  replicas: 2
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: signup
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: web-server
+        image: nginx
+        ports:
+        - containerPort: 80
+
+3] replica-set
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+      - {key: myname, operator: In, values: [qspider, jspider, pyspider]}
+      - {key: env, operator: NotIn, values: [skillrary]}
+  template:
+    metadata:
+      name: sak
+      labels:
+        myname: qspider
+    spec:
+      containers:
+        - name: abc
+          image: ubuntu
+          command: ["/bin/bash", "-c", "while true; do echo Hello-world; sleep 3; done"]
